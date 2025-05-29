@@ -594,7 +594,7 @@
     <servlet.api.version>3.1.0</servlet.api.version>
     <wx.rs.api.version>2.1.1</wx.rs.api.version>
     <tomcat.jasper.version>9.0.110</tomcat.jasper.version>
-    <jruby.version>9.4.9.0</jruby.version>
+    <jruby.version>9.4.12.1</jruby.version>
     <junit.jupiter.version>5.13.4</junit.jupiter.version>
     <junit.vintage.version>5.13.4</junit.vintage.version>
     <awaitility.version>4.3.0</awaitility.version>
@@ -623,8 +623,8 @@
     <clover.version>4.0.3</clover.version>
     <jettison.version>1.5.4</jettison.version>
     <!--Make sure these joni/jcodings are compatible with the versions used by jruby-->
-    <joni.version>2.2.1</joni.version>
-    <jcodings.version>1.0.58</jcodings.version>
+    <joni.version>2.2.3</joni.version>
+    <jcodings.version>1.0.61</jcodings.version>
     <spy.version>2.12.3</spy.version>
     <bouncycastle.version>1.81</bouncycastle.version>
     <skyscreamer.version>1.5.1</skyscreamer.version>
