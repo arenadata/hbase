@@ -83,6 +83,7 @@ import org.slf4j.LoggerFactory;
 
 import org.apache.hbase.thirdparty.com.google.common.base.Preconditions;
 import org.apache.hbase.thirdparty.com.google.common.base.Splitter;
+import org.apache.hbase.thirdparty.com.google.common.collect.ImmutableList;
 import org.apache.hbase.thirdparty.com.google.common.collect.Iterators;
 
 import org.apache.hadoop.hbase.shaded.protobuf.generated.BackupProtos;
@@ -283,6 +284,41 @@ public final class BackupSystemTable implements Closeable {
   @Override
   public void close() {
     // do nothing
+  }
+
+  /**
+   * @param toDisallow Any most recent full back containing this table will be marked as disallowing
+   *                   further incrementals
+   */
+  public void disallowFurtherIncrementals(TableName toDisallow) throws IOException {
+    List<BackupInfo> fullTableBackups = getCompletedFullBackupsSortedByHistoryDesc();
+    List<Put> invalidatePuts = new ArrayList<>(fullTableBackups.size());
+    Set<String> backupRootDirsSeen = new HashSet<>(fullTableBackups.size());
+
+    for (BackupInfo backupInfo : fullTableBackups) {
+      // to minimize the amount of mutations against the backup system table, we only
+      // need to update the most recent full backups that allow incremental backups
+      if (
+        backupInfo.getTables().contains(toDisallow) && backupInfo.getType() == BackupType.FULL
+          && !backupInfo.isDisallowFurtherIncrementals()
+          && !backupRootDirsSeen.contains(backupInfo.getBackupRootDir())
+      ) {
+        backupInfo.setDisallowFurtherIncrementals(true);
+        backupRootDirsSeen.add(backupInfo.getBackupRootDir());
+        invalidatePuts.add(createPutForBackupInfo(backupInfo));
+        LOG.info("Disallowing incremental backups for backup {} due to table {}",
+          backupInfo.getBackupId(), toDisallow);
+      }
+    }
+
+    try (BufferedMutator mutator = connection.getBufferedMutator(tableName)) {
+      mutator.mutate(invalidatePuts);
+    }
+
+    // Clean up bulkloaded HFiles associated with the table
+    List<byte[]> bulkloadedRows = readBulkloadRows(ImmutableList.of(toDisallow)).stream()
+      .map(BulkLoad::getRowKey).collect(Collectors.toList());
+    deleteBulkLoadedRows(bulkloadedRows);
   }
 
   /**
@@ -635,6 +671,24 @@ public final class BackupSystemTable implements Closeable {
       }
       return list;
     }
+  }
+
+  private List<BackupInfo> getCompletedFullBackupsSortedByHistoryDesc() throws IOException {
+    Scan scan = createScanForBackupHistory(Order.NEW_TO_OLD);
+    List<BackupInfo> backups = new ArrayList<>();
+
+    try (Table table = connection.getTable(tableName)) {
+      ResultScanner scanner = table.getScanner(scan);
+      Result res;
+      while ((res = scanner.next()) != null) {
+        res.advance();
+        BackupInfo context = cellToBackupInfo(res.current());
+        if (context.getState() == BackupState.COMPLETE && context.getType() == BackupType.FULL) {
+          backups.add(context);
+        }
+      }
+    }
+    return backups;
   }
 
   /**
