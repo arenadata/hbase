@@ -26,8 +26,9 @@ import org.apache.yetus.audience.InterfaceStability;
 @InterfaceStability.Evolving
 public class IncrementalBackupsDisallowedException extends HBaseIOException {
   public IncrementalBackupsDisallowedException(BackupRequest request) {
-    super("Could not take incremental backup for tables "
-      + "%s because is disallowed, please take a full backup instead"
-        .formatted(request.getTableList()));
+    super(String.format(
+      "Could not take incremental backup for tables %s because it is disallowed; please take a full backup instead",
+      request.getTableList()
+    ));
   }
 }
