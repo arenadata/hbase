@@ -310,7 +310,8 @@ public final class BackupSystemTable implements Closeable {
 
     // Clean up bulkloaded HFiles associated with the table
     List<byte[]> bulkloadedRows =
-      readBulkloadRows(List.of(toDisallow)).stream().map(BulkLoad::getRowKey).toList();
+      readBulkloadRows(Collections.singletonList(toDisallow)).stream().map(BulkLoad::getRowKey)
+        .collect(Collectors.toList());
     deleteBulkLoadedRows(bulkloadedRows);
   }
 
