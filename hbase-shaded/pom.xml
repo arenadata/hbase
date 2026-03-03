@@ -475,9 +475,6 @@
                       <exclude>jnamed*</exclude>
                       <exclude>lookup*</exclude>
                       <exclude>update*</exclude>
-                      <!-- dnsjava MR-JAR provider can be relocated in service descriptor
-                           without matching relocated class; keep JVM default resolver -->
-                      <exclude>META-INF/services/java.net.spi.InetAddressResolverProvider</exclude>
                     </excludes>
                   </filter>
                   <filter>

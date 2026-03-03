@@ -202,6 +202,12 @@
               </relocations>
               <filters combine.children="append">
                 <filter>
+                  <artifact>dnsjava:dnsjava</artifact>
+                  <excludes>
+                    <exclude>META-INF/services/java.net.spi.InetAddressResolverProvider</exclude>
+                  </excludes>
+                </filter>
+                <filter>
                   <artifact>*:*</artifact>
                   <excludes>
                     <exclude>META-INF/services/javax.ws.rs.ext.MessageBodyReader</exclude>
