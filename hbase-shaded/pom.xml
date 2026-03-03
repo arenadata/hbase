@@ -34,6 +34,7 @@
     <module>hbase-shaded-client-byo-hadoop</module>
     <module>hbase-shaded-client</module>
     <module>hbase-shaded-mapreduce</module>
+    <module>hbase-backup-shaded</module>
     <module>hbase-shaded-testing-util</module>
     <module>hbase-shaded-testing-util-tester</module>
     <module>hbase-shaded-check-invariants</module>
@@ -470,6 +471,9 @@
                       <exclude>jnamed*</exclude>
                       <exclude>lookup*</exclude>
                       <exclude>update*</exclude>
+                      <!-- dnsjava MR-JAR provider can be relocated in service descriptor
+                           without matching relocated class; keep JVM default resolver -->
+                      <exclude>META-INF/services/java.net.spi.InetAddressResolverProvider</exclude>
                     </excludes>
                   </filter>
                   <filter>
