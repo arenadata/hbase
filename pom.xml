@@ -607,7 +607,7 @@
     <byte-buddy.version>1.15.11</byte-buddy.version>
     <!--Internally we use a different version of protobuf. See hbase-protocol-shaded-->
     <external.protobuf.groupid>com.google.protobuf</external.protobuf.groupid>
-    <external.protobuf.version>2.5.0</external.protobuf.version>
+    <external.protobuf.version>3.25.9</external.protobuf.version>
     <external.protoc.version>${external.protobuf.version}</external.protoc.version>
     <!--
       Version of protobuf that hbase uses internally (we shade our pb) Must match what is out
@@ -775,8 +775,8 @@
     <hbase-surefire.jdk18.flags>-Djava.security.manager=allow</hbase-surefire.jdk18.flags>
     <!-- Surefire argLine defaults to Linux, cygwin argLine is used in the os.windows profile -->
     <argLine>${hbase-surefire.argLine} @{jacocoArgLine}</argLine>
-    <extra.enforcer.version>1.5.1</extra.enforcer.version>
-    <enforcer.version>3.0.0</enforcer.version>
+    <extra.enforcer.version>1.8.0</extra.enforcer.version>
+    <enforcer.version>3.4.1</enforcer.version>
     <restrict-imports.enforcer.version>0.14.0</restrict-imports.enforcer.version>
     <!-- Location of test resources -->
     <test.build.classes>${project.build.directory}/test-classes</test.build.classes>
