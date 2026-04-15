@@ -32,6 +32,7 @@ import java.util.Arrays;
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.yetus.audience.InterfaceAudience;
+import org.apache.hbase.thirdparty.com.google.common.net.InetAddresses;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
@@ -149,7 +150,11 @@ public final class X509TestContext {
     }
     GeneralName[] names = new GeneralName[subjectAltNames.length];
     for (int i = 0; i < subjectAltNames.length; i++) {
-      names[i] = new GeneralName(GeneralName.dNSName, subjectAltNames[i]);
+      if (InetAddresses.isInetAddress(subjectAltNames[i])) {
+        names[i] = new GeneralName(GeneralName.iPAddress, subjectAltNames[i]);
+      } else {
+        names[i] = new GeneralName(GeneralName.dNSName, subjectAltNames[i]);
+      }
     }
     return X509TestHelpers.newCert(trustStoreCertificate, trustStoreKeyPair, name,
       keyStoreKeyPair.getPublic(), new GeneralNames(names));

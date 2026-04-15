@@ -38,7 +38,7 @@
   </parent>
   <groupId>org.apache.hbase</groupId>
   <artifactId>hbase</artifactId>
-  <version>${revision}</version>
+  <version>2.6.5.1-4.3.0-0</version>
   <packaging>pom</packaging>
   <name>Apache HBase</name>
   <description>Apache HBase is the Hadoop database. Use it when you need
@@ -513,6 +513,11 @@
     <url>https://issues.apache.org/jira/browse/HBASE</url>
   </issueManagement>
   <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub arenadata Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/arenadata/hbase</url>
+    </repository>
     <site>
       <id>hbase.apache.org</id>
       <name>HBase Website at hbase.apache.org</name>
@@ -522,8 +527,14 @@
       <url>file:///tmp</url>
     </site>
   </distributionManagement>
+  <repositories>
+    <repository>
+      <id>arenadata</id>
+      <url>https://maven.pkg.github.com/arenadata/*</url>
+    </repository>
+  </repositories>
   <properties>
-    <revision>2.6.5</revision>
+    <revision>2.6.5.1-4.3.0-0</revision>
     <!-- override on command line to have generated LICENSE files include
          diagnostic info for verifying notice requirements -->
     <license.debug.print.included>false</license.debug.print.included>
