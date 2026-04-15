@@ -119,15 +119,12 @@ public class TestRSStatusPage {
     ServerName firstServerName = onlineServersList.get(0);
     int infoPort = master.getRegionServerInfoPort(firstServerName);
     String hostname = firstServerName.getHostname();
-    int port = firstServerName.getPort();
 
     URL url = new URL("http://" + hostname + ":" + infoPort + "/regionserver.jsp");
     String page = TestServerHttpUtils.getPageContent(url, "text/html;charset=utf-8");
 
     assertTrue(page.contains("<title>HBase Region Server: " + masterHostname + "</title>"));
-
-    String expectedPageHeader = "<h1>RegionServer <small>" + hostname + "," + port + ","
-      + firstServerName.getStartCode() + "</small></h1>";
+    String expectedPageHeader = "<h1>RegionServer <small>" + firstServerName + "</small></h1>";
     assertTrue(page.contains(expectedPageHeader));
     assertTrue(page.contains("<h2>Server Metrics</h2>"));
     assertTrue(page.contains("<th>Requests Per Second</th>"));

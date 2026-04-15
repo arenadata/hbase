@@ -153,7 +153,7 @@ public class TestMutualTlsClientSideNonLocalhost {
     serverConf.setBoolean(X509Util.HBASE_SERVER_NETTY_TLS_SUPPORTPLAINTEXT, supportPlaintext);
     clientConf.setBoolean(X509Util.HBASE_CLIENT_NETTY_TLS_VERIFY_SERVER_HOSTNAME, true);
     x509TestContext.regenerateStores(X509KeyType.RSA, X509KeyType.RSA, KeyStoreFileType.JKS,
-      KeyStoreFileType.JKS, InetAddress.getLocalHost().getHostName());
+      KeyStoreFileType.JKS, InetAddress.getLocalHost().getHostName(), "localhost");
   }
 
   @After

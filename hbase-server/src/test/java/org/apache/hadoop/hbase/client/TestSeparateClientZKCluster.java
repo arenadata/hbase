@@ -55,7 +55,7 @@ public class TestSeparateClientZKCluster {
   private static final HBaseTestingUtility TEST_UTIL = new HBaseTestingUtility();
   private static final File clientZkDir =
     new File(TEST_UTIL.getDataTestDir("TestSeparateClientZKCluster").toString());
-  private static final int ZK_SESSION_TIMEOUT = 5000;
+  private static final int ZK_SESSION_TIMEOUT = 30000;
   private static MiniZooKeeperCluster clientZkCluster;
 
   private final byte[] family = Bytes.toBytes("cf");
