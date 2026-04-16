@@ -425,16 +425,16 @@ unset IFS
 #Set the right GC options based on the what we are running
 declare -a server_cmds=("master" "regionserver" "thrift" "thrift2" "rest" "avro" "zookeeper")
 for cmd in ${server_cmds[@]}; do
-	if [[ $cmd == $COMMAND ]]; then
-		server=true
-		break
-	fi
+        if [[ $cmd == $COMMAND ]]; then
+                server=true
+                break
+        fi
 done
 
 if [[ $server ]]; then
-	HBASE_OPTS="$HBASE_OPTS $SERVER_GC_OPTS"
+        HBASE_OPTS="$HBASE_OPTS $SERVER_GC_OPTS"
 else
-	HBASE_OPTS="$HBASE_OPTS $CLIENT_GC_OPTS"
+        HBASE_OPTS="$HBASE_OPTS $CLIENT_GC_OPTS"
 fi
 
 if [ -n "$HBASE_SERVER_JAAS_OPTS" ]; then
@@ -548,7 +548,7 @@ fi
 
 # figure out which class to run
 if [ "$COMMAND" = "shell" ] ; then
-	#find the hbase ruby sources
+        #find the hbase ruby sources
   # assume we are in a binary install if lib/ruby exists
   if [ -d "$HBASE_HOME/lib/ruby" ]; then
     # We want jruby to consume these things rather than our bootstrap script;
@@ -644,12 +644,12 @@ elif [ "$COMMAND" = "regionserver" ] ; then
 elif [ "$COMMAND" = "thrift" ] ; then
   CLASS='org.apache.hadoop.hbase.thrift.ThriftServer'
   if [ "$1" != "stop" ] ; then
-    HBASE_OPTS="$HBASE_OPTS $HBASE_THRIFT_OPTS"
+    HBASE_OPTS="$HBASE_OPTS $HBASE_THRIFT1_OPTS"
   fi
 elif [ "$COMMAND" = "thrift2" ] ; then
   CLASS='org.apache.hadoop.hbase.thrift2.ThriftServer'
   if [ "$1" != "stop" ] ; then
-    HBASE_OPTS="$HBASE_OPTS $HBASE_THRIFT_OPTS"
+    HBASE_OPTS="$HBASE_OPTS $HBASE_THRIFT2_OPTS"
   fi
 elif [ "$COMMAND" = "rest" ] ; then
   CLASS='org.apache.hadoop.hbase.rest.RESTServer'

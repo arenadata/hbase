@@ -1229,6 +1229,12 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>${httpclient.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
@@ -1239,6 +1245,17 @@
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
         <version>${commons-codec.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-validator</groupId>
+        <artifactId>commons-validator</artifactId>
+        <version>${commons-validator.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId>
@@ -1259,14 +1276,6 @@
         <groupId>commons-cli</groupId>
         <artifactId>commons-cli</artifactId>
         <version>${commons-cli.version}</version>
-      </dependency>
-      <dependency>
-        <!-- commons-logging is only used by hbase-http's HttpRequestLog and hbase-server's
-             HBaseTestingUtil.
-          -->
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>1.2</version>
       </dependency>
       <dependency>
         <groupId>org.apache.zookeeper</groupId>
@@ -2194,8 +2203,7 @@
                   <excludes>
                     <exclude>commons-logging:commons-logging</exclude>
                   </excludes>
-                  <message>We don't use commons-logging any more, so do not depend on it directly.</message>
-                  <searchTransitive>false</searchTransitive>
+                  <message>We don't use commons-logging any more, so do not depend on it directly. We are also using jcl-over-slf4j for libraries so exclude any transitive commons-logging dependencies.</message>
                 </bannedDependencies>
               </rules>
             </configuration>
@@ -3472,6 +3480,10 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
               </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -3523,6 +3535,10 @@
                 <groupId>com.codahale.metrics</groupId>
                 <artifactId>metrics-core</artifactId>
               </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -3559,6 +3575,10 @@
               <exclusion>
                 <groupId>com.codahale.metrics</groupId>
                 <artifactId>metrics-core</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
@@ -3616,6 +3636,10 @@
                 <groupId>com.codahale.metrics</groupId>
                 <artifactId>metrics-core</artifactId>
               </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -3670,6 +3694,10 @@
               <exclusion>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
@@ -3727,6 +3755,10 @@
               <exclusion>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
@@ -3826,6 +3858,10 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
               </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -3891,6 +3927,10 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
               </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -3923,6 +3963,10 @@
               <exclusion>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
@@ -3984,6 +4028,10 @@
               <exclusion>
                 <groupId>com.codahale.metrics</groupId>
                 <artifactId>metrics-core</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
@@ -4317,6 +4365,10 @@
                 <groupId>org.openlabtesting.leveldbjni</groupId>
                 <artifactId>leveldbjni-all</artifactId>
               </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -4369,6 +4421,10 @@
               <exclusion>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
@@ -4473,6 +4529,10 @@
                 <artifactId>slf4j-reload4j</artifactId>
               </exclusion>
               <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
+              <exclusion>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
               </exclusion>
@@ -4567,6 +4627,10 @@
                 <artifactId>jsr311-api</artifactId>
               </exclusion>
               <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
+              <exclusion>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
               </exclusion>
@@ -4644,6 +4708,10 @@
               <exclusion>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpkix-jdk15on</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
