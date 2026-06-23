@@ -40,22 +40,19 @@ import org.apache.hadoop.hbase.io.hfile.HFileContextBuilder;
 import org.apache.hadoop.hbase.io.hfile.RandomKeyValueUtil;
 import org.apache.hadoop.hbase.regionserver.StoreFileWriter;
 import org.apache.hadoop.hbase.testclassification.IOTests;
-import org.apache.hadoop.hbase.testclassification.LargeTests;
+import org.apache.hadoop.hbase.testclassification.SmallTests;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.junit.Ignore;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Ignore("Known upstream flake: BucketCache 32MB fills before prefetch completes, "
-  + "causing fullyCachedFiles assertion to fail. Fails on upstream branch-2.6 nightlies.")
 @RunWith(Parameterized.class)
-@Category({ IOTests.class, LargeTests.class })
+@Category({ IOTests.class, SmallTests.class })
 public class TestPrefetchPersistence {
   @ClassRule
   public static final HBaseClassTestRule CLASS_RULE =
