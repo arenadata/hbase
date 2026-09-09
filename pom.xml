@@ -577,7 +577,7 @@
       in the dependencyManagement section as it could still lead to different versions of netty
       modules and cause trouble if we only rely on transitive dependencies.
     -->
-    <netty4.version>4.1.131.Final</netty4.version>
+    <netty4.version>4.1.137.Final</netty4.version>
     <!-- end HBASE-15925 default hadoop compatibility values -->
     <audience-annotations.version>0.13.0</audience-annotations.version>
     <!--
@@ -600,12 +600,13 @@
       Note that the version of jackson-[annotations,core,databind] must be kept in sync with the
       version of jackson-jaxrs-json-provider shipped in hbase-thirdparty.
     -->
-    <jackson.version>2.21.1</jackson.version>
+    <jackson.version>2.21.5</jackson.version>
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <servlet.api.version>3.1.0</servlet.api.version>
     <wx.rs.api.version>2.1.1</wx.rs.api.version>
     <tomcat.jasper.version>9.0.110</tomcat.jasper.version>
-    <jruby.version>9.4.14.0</jruby.version>
+    <jetty.version>9.4.58.1</jetty.version>
+    <jruby.version>9.4.15.0</jruby.version>
     <junit.jupiter.version>5.13.4</junit.jupiter.version>
     <junit.vintage.version>5.13.4</junit.vintage.version>
     <junit.platform.version>1.13.4</junit.platform.version>
@@ -613,8 +614,8 @@
     <hamcrest.version>1.3</hamcrest.version>
     <opentelemetry.version>1.49.0</opentelemetry.version>
     <opentelemetry-semconv.version>1.29.0-alpha</opentelemetry-semconv.version>
-    <opentelemetry-javaagent.version>2.26.1</opentelemetry-javaagent.version>
-    <log4j2.version>2.25.3</log4j2.version>
+    <opentelemetry-javaagent.version>2.27.0</opentelemetry-javaagent.version>
+    <log4j2.version>2.25.5</log4j2.version>
     <mockito.version>4.11.0</mockito.version>
     <byte-buddy.version>1.15.11</byte-buddy.version>
     <!--Internally we use a different version of protobuf. See hbase-protocol-shaded-->
@@ -631,6 +632,8 @@
     <thrift.version>0.14.1</thrift.version>
     <zookeeper.version>3.9.5.1-4.3.0-0</zookeeper.version>
     <jline.version>2.11</jline.version>
+    <!-- org.jline:jline comes in through hadoop-yarn-client; HBase does not use it -->
+    <jline3.version>3.30.16</jline3.version>
     <slf4j.version>1.7.33</slf4j.version>
     <clover.version>4.0.3</clover.version>
     <jettison.version>1.5.4</jettison.version>
@@ -638,7 +641,7 @@
     <joni.version>2.2.5</joni.version>
     <jcodings.version>1.0.63</jcodings.version>
     <spy.version>2.12.3</spy.version>
-    <bouncycastle.version>1.81</bouncycastle.version>
+    <bouncycastle.version>1.84</bouncycastle.version>
     <skyscreamer.version>1.5.1</skyscreamer.version>
     <kerby.version>1.0.1</kerby.version>
     <commons-crypto.version>1.1.0</commons-crypto.version>
@@ -687,7 +690,7 @@
         databind] must be kept in sync with the version of jackson-jaxrs-json-provider shipped in
         hbase-thirdparty.
     -->
-    <hbase-thirdparty.version>4.1.13</hbase-thirdparty.version>
+    <hbase-thirdparty.version>4.1.13.1-4.4.0-0</hbase-thirdparty.version>
     <!-- Coverage properties -->
     <jacoco.version>0.8.8</jacoco.version>
     <jacocoArgLine/>
@@ -1298,6 +1301,11 @@
         <version>${jline.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.jline</groupId>
+        <artifactId>jline</artifactId>
+        <version>${jline3.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.thrift</groupId>
         <artifactId>libthrift</artifactId>
         <version>${thrift.version}</version>
@@ -1671,6 +1679,13 @@
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
         <version>${jackson.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-bom</artifactId>
+        <version>${jetty.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
