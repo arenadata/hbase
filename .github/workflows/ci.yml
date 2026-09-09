@@ -1,27 +1,15 @@
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-
 name: CI
 
 on:
   push:
-    branches: ['develop/**', 'release/**']
+    branches: ['develop/**']
   pull_request:
-    branches: ['develop/**', 'release/**']
+    branches: ['develop/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -29,7 +17,7 @@ concurrency:
 
 env:
   MAVEN_ARGS: -B -V -e -ntp
-  MAVEN_COMMON_FLAGS: -Dhadoop.profile=3.0 -Drat.skip=true -Dmaven.javadoc.skip=true
+  MAVEN_COMMON_FLAGS: "-Dhadoop.profile=3.0 -Drat.skip=true -Dsurefire.firstPartForkCount=0.5C -Dsurefire.secondPartForkCount=0.5C"
 
 jobs:
   compile:
@@ -37,26 +25,28 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: temurin
-          cache: maven
-          server-id: arenadata
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
-      - name: Compile
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          mvn ${{ env.MAVEN_ARGS }} install -DskipTests
-          ${{ env.MAVEN_COMMON_FLAGS }} -Pbuild-with-jdk17
-      - name: Save m2 repository
-        uses: actions/cache/save@v4
-        with:
-          path: ~/.m2/repository
-          key: m2-${{ github.sha }}
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: temurin
+        cache: maven
+        server-id: arenadata
+        server-username: GITHUB_ACTOR
+        server-password: GITHUB_TOKEN
+    - name: Compile
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: >-
+        mvn ${{ env.MAVEN_ARGS }} install -DskipTests ${{ env.MAVEN_COMMON_FLAGS }}
+        -Dmaven.javadoc.skip=true
+    - name: Save m2 repository
+      uses: actions/cache/save@v4
+      with:
+        path: ~/.m2/repository
+        key: m2-${{ github.sha }}
 
   test:
     name: "${{ matrix.name }}"
@@ -67,56 +57,57 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Small Tests
-            profile: runSmallTests
+          - name: "Small Tests"
+            profile: "runSmallTests"
             timeout: 60
-
-          - name: Medium Tests
-            profile: runMediumTests
+          - name: "Medium Tests"
+            profile: "runMediumTests"
             timeout: 180
-
-          - name: Large Tests (Wave 1)
-            profile: runLargeTests-wave1
+          - name: "Large Tests (Wave 1)"
+            profile: "runLargeTests-wave1"
             timeout: 240
-
-          - name: Large Tests (Wave 2)
-            profile: runLargeTests-wave2
+          - name: "Large Tests (Wave 2)"
+            profile: "runLargeTests-wave2"
             timeout: 240
-
-          - name: Large Tests (Wave 3)
-            profile: runLargeTests-wave3
+          - name: "Large Tests (Wave 3)"
+            profile: "runLargeTests-wave3"
             timeout: 240
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: temurin
-          server-id: arenadata
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
-      - name: Restore m2 repository
-        uses: actions/cache/restore@v4
-        with:
-          path: ~/.m2/repository
-          key: m2-${{ github.sha }}
-      - name: Run tests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          mvn ${{ env.MAVEN_ARGS }} test
-          ${{ env.MAVEN_COMMON_FLAGS }}
-          -Pbuild-with-jdk17,${{ matrix.profile }}
-          -Dsurefire.firstPartForkCount=0.5C
-          -Dsurefire.secondPartForkCount=0.5C
-          -Dsurefire.rerunFailingTestsCount=2
-          -Dmaven.test.failure.ignore=false
-          -fae
-      - name: Upload surefire reports
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-${{ matrix.name }}
-          path: '**/target/surefire-reports/'
-          if-no-files-found: ignore
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: temurin
+        server-id: arenadata
+        server-username: GITHUB_ACTOR
+        server-password: GITHUB_TOKEN
+    - name: Restore m2 repository
+      uses: actions/cache/restore@v4
+      with:
+        path: ~/.m2/repository
+        key: m2-${{ github.sha }}
+        fail-on-cache-miss: true
+    - name: Run tests
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: >-
+        mvn ${{ env.MAVEN_ARGS }} test ${{ env.MAVEN_COMMON_FLAGS }}
+        -P${{ matrix.profile }}
+        ${{ matrix.tests && format('-Dtest={0}', matrix.tests) || '' }}
+        ${{ matrix.flags || '' }}
+        -Dmaven.javadoc.skip=true
+        -Dsurefire.rerunFailingTestsCount=2
+        -Dmaven.test.failure.ignore=false
+        -fae
+    - name: Upload surefire reports
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: surefire-${{ matrix.name }}
+        path: |
+          **/target/surefire-reports/
+          **/target/failsafe-reports/
+        if-no-files-found: ignore
