@@ -634,7 +634,7 @@
          The libthrift runtime classes are pulled from the hbase-shaded-thrift artifact in
          hbase-thirdparty. -->
     <thrift.version>0.23.0</thrift.version>
-    <zookeeper.version>3.9.5.1-4.3.0-0</zookeeper.version>
+    <zookeeper.version>3.9.5.2-4.4.0-0</zookeeper.version>
     <jline.version>2.11</jline.version>
     <!-- org.jline:jline comes in through hadoop-yarn-client; HBase does not use it -->
     <jline3.version>3.30.16</jline3.version>
@@ -649,7 +649,7 @@
     <skyscreamer.version>1.5.1</skyscreamer.version>
     <kerby.version>1.0.1</kerby.version>
     <commons-crypto.version>1.1.0</commons-crypto.version>
-    <curator.version>5.9.0.1-4.3.0-0</curator.version>
+    <curator.version>5.9.0.2-4.4.0-0</curator.version>
     <!-- Plugin Dependencies -->
     <build.helper.maven.version>3.0.0</build.helper.maven.version>
     <buildnumber.maven.version>1.4</buildnumber.maven.version>
