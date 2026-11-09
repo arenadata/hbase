@@ -559,7 +559,7 @@
     <java.min.version>${compileSource}</java.min.version>
     <!-- Dependencies -->
     <hadoop-two.version>2.10.2</hadoop-two.version>
-    <hadoop-three.version>3.4.3.1-4.3.0-0</hadoop-three.version>
+    <hadoop-three.version>3.4.3.3-4.5.0-0</hadoop-three.version>
     <!-- These must be defined here for downstream build tools that don't look at profiles.
          They ought to match the values found in our default hadoop profile, which is
          currently "hadoop-2.0". See HBASE-15925 for more info. -->
@@ -588,8 +588,8 @@
     <avro.version>1.11.5</avro.version>
     <caffeine.version>2.8.1</caffeine.version>
     <commons-codec.version>1.15</commons-codec.version>
-    <commons-io.version>2.18.0</commons-io.version>
-    <commons-lang3.version>3.18.0</commons-lang3.version>
+    <commons-io.version>2.22.0</commons-io.version>
+    <commons-lang3.version>3.20.0</commons-lang3.version>
     <commons-math.version>3.6.1</commons-math.version>
     <commons-cli.version>1.5.0</commons-cli.version>
     <disruptor.version>3.4.4</disruptor.version>
@@ -600,7 +600,7 @@
       Note that the version of jackson-[annotations,core,databind] must be kept in sync with the
       version of jackson-jaxrs-json-provider shipped in hbase-thirdparty.
     -->
-    <jackson.version>2.21.5</jackson.version>
+    <jackson.version>2.21.7</jackson.version>
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <servlet.api.version>3.1.0</servlet.api.version>
     <wx.rs.api.version>2.1.1</wx.rs.api.version>
@@ -636,8 +636,6 @@
     <thrift.version>0.23.0</thrift.version>
     <zookeeper.version>3.9.5.2-4.4.0-0</zookeeper.version>
     <jline.version>2.11</jline.version>
-    <!-- org.jline:jline comes in through hadoop-yarn-client; HBase does not use it -->
-    <jline3.version>3.30.16</jline3.version>
     <slf4j.version>1.7.33</slf4j.version>
     <clover.version>4.0.3</clover.version>
     <jettison.version>1.5.4</jettison.version>
@@ -645,7 +643,7 @@
     <joni.version>2.2.5</joni.version>
     <jcodings.version>1.0.63</jcodings.version>
     <spy.version>2.12.3</spy.version>
-    <bouncycastle.version>1.84</bouncycastle.version>
+    <bouncycastle.version>1.86</bouncycastle.version>
     <skyscreamer.version>1.5.1</skyscreamer.version>
     <kerby.version>1.0.1</kerby.version>
     <commons-crypto.version>1.1.0</commons-crypto.version>
@@ -685,8 +683,8 @@
     <!-- compression -->
     <aircompressor.version>2.0.3</aircompressor.version>
     <brotli4j.version>1.11.0</brotli4j.version>
-    <lz4.version>1.11.1</lz4.version>
-    <snappy.version>1.1.10.4</snappy.version>
+    <lz4.version>1.11.4</lz4.version>
+    <snappy.version>1.1.10.12</snappy.version>
     <zstd-jni.version>1.5.7-2</zstd-jni.version>
     <!--
         Note that the version of protobuf shipped in hbase-thirdparty must match the version used
@@ -1280,6 +1278,16 @@
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
+        <artifactId>commons-configuration2</artifactId>
+        <version>2.15.1</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>33.7.2-jre</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
         <artifactId>commons-math3</artifactId>
         <version>${commons-math.version}</version>
       </dependency>
@@ -1307,11 +1315,6 @@
         <groupId>jline</groupId>
         <artifactId>jline</artifactId>
         <version>${jline.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jline</groupId>
-        <artifactId>jline</artifactId>
-        <version>${jline3.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jruby</groupId>
@@ -4223,6 +4226,10 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
               </exclusion>
+              <exclusion>
+                <groupId>org.jline</groupId>
+                <artifactId>jline</artifactId>
+              </exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -4681,6 +4688,12 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
             <version>${hadoop-three.version}</version>
+            <exclusions>
+              <exclusion>
+                <groupId>org.jline</groupId>
+                <artifactId>jline</artifactId>
+              </exclusion>
+            </exclusions>
           </dependency>
           <dependency>
             <groupId>org.apache.hadoop</groupId>
@@ -4753,6 +4766,10 @@
               <exclusion>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>org.jline</groupId>
+                <artifactId>jline</artifactId>
               </exclusion>
             </exclusions>
           </dependency>
