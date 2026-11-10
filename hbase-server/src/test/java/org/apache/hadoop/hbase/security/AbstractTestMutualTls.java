@@ -182,7 +182,7 @@ public abstract class AbstractTestMutualTls {
         // localhost or any reasonable name that this test might run on.
         X509Certificate cert = x509TestContext.newCert(new X500NameBuilder(BCStyle.INSTANCE)
           .addRDN(BCStyle.CN,
-            MethodHandles.lookup().lookupClass().getCanonicalName() + " With Bad Host Test")
+            MethodHandles.lookup().lookupClass().getSimpleName() + " With Bad Host Test")
           .build(), "www.example.com");
         x509TestContext.cloneWithNewKeystoreCert(cert)
           .setKeystoreConfigurations(KeyStoreFileType.JKS, confToSet);

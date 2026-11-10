@@ -63,7 +63,7 @@ public class TestHBaseHostnameVerifier {
     Security.addProvider(new BouncyCastleProvider());
     X500NameBuilder caNameBuilder = new X500NameBuilder(BCStyle.INSTANCE);
     caNameBuilder.addRDN(BCStyle.CN,
-      MethodHandles.lookup().lookupClass().getCanonicalName() + " Root CA");
+      MethodHandles.lookup().lookupClass().getSimpleName() + " Root CA");
     KeyPair keyPair = X509TestHelpers.generateKeyPair(X509KeyType.EC);
     X509Certificate caCert = X509TestHelpers.newSelfSignedCACert(caNameBuilder.build(), keyPair);
     certificateCreator = new CertificateCreator(keyPair, caCert);

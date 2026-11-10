@@ -509,13 +509,13 @@ public final class X509TestContext {
     throws GeneralSecurityException, IOException, OperatorCreationException {
     X500NameBuilder caNameBuilder = new X500NameBuilder(BCStyle.INSTANCE);
     caNameBuilder.addRDN(BCStyle.CN,
-      MethodHandles.lookup().lookupClass().getCanonicalName() + " Root CA");
+      MethodHandles.lookup().lookupClass().getSimpleName() + " Root CA");
     trustStoreCertificate =
       X509TestHelpers.newSelfSignedCACert(caNameBuilder.build(), trustStoreKeyPair);
 
     X500NameBuilder nameBuilder = new X500NameBuilder(BCStyle.INSTANCE);
     nameBuilder.addRDN(BCStyle.CN,
-      MethodHandles.lookup().lookupClass().getCanonicalName() + " Zookeeper Test");
+      MethodHandles.lookup().lookupClass().getSimpleName() + " Zookeeper Test");
     keyStoreCertificate = newCert(nameBuilder.build(), subjectAltNames);
   }
 
