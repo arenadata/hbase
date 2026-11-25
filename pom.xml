@@ -38,7 +38,7 @@
   </parent>
   <groupId>org.apache.hbase</groupId>
   <artifactId>hbase</artifactId>
-  <version>2.6.5.3-4.5.0-0</version>
+  <version>2.6.5.3-4.5.0-1</version>
   <packaging>pom</packaging>
   <name>Apache HBase</name>
   <description>Apache HBase is the Hadoop database. Use it when you need
@@ -534,7 +534,7 @@
     </repository>
   </repositories>
   <properties>
-    <revision>2.6.5.3-4.5.0-0</revision>
+    <revision>2.6.5.3-4.5.0-1</revision>
     <!-- override on command line to have generated LICENSE files include
          diagnostic info for verifying notice requirements -->
     <license.debug.print.included>false</license.debug.print.included>
@@ -559,7 +559,7 @@
     <java.min.version>${compileSource}</java.min.version>
     <!-- Dependencies -->
     <hadoop-two.version>2.10.2</hadoop-two.version>
-    <hadoop-three.version>3.4.3.3-4.5.0-0</hadoop-three.version>
+    <hadoop-three.version>3.4.3.3-4.5.0-1</hadoop-three.version>
     <!-- These must be defined here for downstream build tools that don't look at profiles.
          They ought to match the values found in our default hadoop profile, which is
          currently "hadoop-2.0". See HBASE-15925 for more info. -->
@@ -634,7 +634,7 @@
          The libthrift runtime classes are pulled from the hbase-shaded-thrift artifact in
          hbase-thirdparty. -->
     <thrift.version>0.23.0</thrift.version>
-    <zookeeper.version>3.9.5.3-4.5.0-1</zookeeper.version>
+    <zookeeper.version>3.9.5.3-4.5.0-2</zookeeper.version>
     <jline.version>2.11</jline.version>
     <slf4j.version>1.7.33</slf4j.version>
     <clover.version>4.0.3</clover.version>
@@ -647,7 +647,7 @@
     <skyscreamer.version>1.5.1</skyscreamer.version>
     <kerby.version>1.0.1</kerby.version>
     <commons-crypto.version>1.1.0</commons-crypto.version>
-    <curator.version>5.9.0.3-4.5.0-1</curator.version>
+    <curator.version>5.9.0.3-4.5.0-2</curator.version>
     <!-- Plugin Dependencies -->
     <build.helper.maven.version>3.0.0</build.helper.maven.version>
     <buildnumber.maven.version>1.4</buildnumber.maven.version>
@@ -692,7 +692,7 @@
         databind] must be kept in sync with the version of jackson-jaxrs-json-provider shipped in
         hbase-thirdparty.
     -->
-    <hbase-thirdparty.version>4.1.14.1-4.4.0-0</hbase-thirdparty.version>
+    <hbase-thirdparty.version>4.1.14.2-4.5.0-0</hbase-thirdparty.version>
     <!-- for.exclusion version are NOT for direct dependencies. To use the provided
     scope to transitively exclude some transitive dependencies, we need to specify
     some existing version to for maven. -->
